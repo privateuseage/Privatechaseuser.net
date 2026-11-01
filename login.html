@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chase Bank Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #fff;
+      width: 90%;
+      max-width: 380px;
+      padding: 40px 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: #004481;
+      font-size: 1.8em;
+      letter-spacing: 1px;
+    }
+
+    p {
+      color: #444;
+      font-size: 0.9em;
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9em;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus {
+      border-color: #0073cf;
+      box-shadow: 0 0 4px rgba(0,115,207,0.4);
+    }
+
+    .login-btn {
+      background: #0073cf;
+      color: #fff;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background 0.3s;
+    }
+
+    .login-btn:hover {
+      background: #005da3;
+    }
+
+    .options {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 0.85em;
+    }
+
+    .options a {
+      color: #0073cf;
+      text-decoration: none;
+      display: inline-block;
+      margin: 5px;
+    }
+
+    .faceid-btn {
+      background: none;
+      border: 2px solid #0073cf;
+      color: #0073cf;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 500;
+      margin-top: 10px;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .faceid-btn:hover {
+      background: #0073cf;
+      color: #fff;
+    }
+
+    .footer-links {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85em;
+    }
+
+    .footer-links a {
+      color: #004481;
+      text-decoration: none;
+    }
+
+    /* Popup styling */
+    .popup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 20px 25px;
+      border-radius: 12px;
+      width: 85%;
+      max-width: 360px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .popup-content p {
+      font-size: 0.95em;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .close-btn {
+      background: #0073cf;
+      color: #fff;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Chase</h1>
+    <p>Private Account</p>
+
+    <div class="input-group">
+      <label for="username">User ID</label>
+      <input type="text" id="username" value="" />
+    </div>
+
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" value="" />
+    </div>
+
+    <button class="login-btn" id="loginBtn">Sign In</button>
+    <button class="faceid-btn" id="faceIdBtn">Login with Face ID</button>
+
+    <div class="options">
+      <a href="#" id="forgotLink">Forgot username/password?</a>
+    </div>
+
+    <div class="footer-links">
+      <a href="#" id="enrollBtn">Enroll</a>
+      <a href="#">ATM & Branch</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <p>For security reasons, to reset your password or User ID, please contact your account manager at:</p>
+      <p><b>John pardi</b><br><a href="mailto:johnppardi07@gmail.com">johnppardi07@gmail.com</a><br>Chase Bank</p>
+      <button class="close-btn" id="closePopup">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Login redirect
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      
+      if (user === 'GabrielDubois0903' && pass === '@00900911') {
+        window.location.href = 'dashboard.html';
+      } else {
+        alert('Invalid credentials. Please check your username or password.');
+      }
+    });
+
+    // Face ID
+    document.getElementById('faceIdBtn').addEventListener('click', () => {
+      alert('Face ID unavailable.\nPlease use password to login instead.');
+    });
+
+    // Forgot username/password popup
+    const popup = document.getElementById('popup');
+    document.getElementById('forgotLink').addEventListener('click', () => {
+      popup.style.display = 'flex';
+    });
+
+    document.getElementById('closePopup').addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    // Enroll redirect (for later setup)
+    document.getElementById('enrollBtn').addEventListener('click', () => {
+      alert('Enroll page coming soon...');
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
