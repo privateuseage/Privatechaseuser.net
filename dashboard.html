@@ -107,6 +107,18 @@
     .logout-btn{background:#ff4b4b;color:white;text-decoration:none;padding:10px 20px;border-radius:8px;font-weight:500;transition:0.3s;display:inline-block;margin-top:20px}
     .logout-btn:hover{background:#e63e3e;transform:scale(1.05)}
     .welcome-container{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:50px;font-family:"Poppins",sans-serif}
+    
+    /* Chase Receipt Styling */
+    .chase-receipt{background:#fff;border:1px solid #d1d5db;border-radius:12px;padding:24px;max-width:440px;margin:0 auto;box-shadow:0 4px 20px rgba(0,0,0,0.08);text-align:left}
+    .chase-receipt-header{text-align:center;border-bottom:2px solid #004481;padding-bottom:14px;margin-bottom:16px}
+    .chase-receipt-header h2{color:#004481;font-size:1.5rem;letter-spacing:1px}
+    .chase-receipt-header p{color:#6b7280;font-size:0.85rem}
+    .receipt-status{background:#ecfdf5;color:#065f46;padding:8px;border-radius:8px;text-align:center;font-weight:700;font-size:0.95rem;margin-bottom:16px}
+    .receipt-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:0.9rem}
+    .receipt-row span:first-child{color:#6b7280}
+    .receipt-row span:last-child{color:#111827;font-weight:600}
+    .receipt-total{display:flex;justify-content:space-between;padding:14px 0 0;font-size:1.1rem;font-weight:800;color:#004481;margin-top:8px}
+
     @media(min-width:720px){.action-btn{width:28%}}
   </style>
 </head>
@@ -135,10 +147,10 @@
 
   <div class="account-card" id="accountCard">
     <div class="visa-tag">VISA</div>
-    <h3>Welcome back</h3>
-    <div class="account-name" id="displayName"> </div>
+    <h3>Welcome back, John Pardi</h3>
+    <div class="account-name" id="displayName">Chase Private Client</div>
     <div class="balance-container">
-      <div class="balance" id="balanceDisplay">$95,310,030.00</div>
+      <div class="balance" id="balanceDisplay">$3,000,000.00</div>
       <button class="hide-balance-btn" id="hideBalanceBtn" onclick="toggleHideBalance()">Hide</button>
     </div>
     <div class="card-footer">Chase Secure Banking •••• 9441</div>
@@ -152,7 +164,7 @@
 
   <div class="snapshot">
     <h4>Snapshot <small class="muted">• 30 sec read</small></h4>
-    <p id="snapshotText">Your money in this month is $6,754.</p>
+    <p id="snapshotText">Your money in this month is $3,000,000.00.</p>
   </div>
 
   <div class="history">
@@ -189,15 +201,15 @@
         <li class="transaction-item"><div class="transaction-info"><h4>Jewelry Purchase for daughter</h4><p>Jun 05, 2019</p></div><div class="transaction-amount expense">-$100,000.50</div></li>
       </ul>
     </div>
-    <p><a href="login.html" class="logout-btn">Log out</a></p>
+    <p><a href="#" onclick="alert('Logged out successfully.');" class="logout-btn">Log out</a></p>
   </div>
 
   <div class="offers">
     <h4>Chase Offers</h4>
     <div class="offer-cards">
-      <div class="offer"><a href="https://jeyjerry11.github.io/Investmentcompany.com/">Earn money online</a><img src="1.png" alt=""><p>Earn cashback on shopping</p></div>
-      <div class="offer"><a href="https://jeyjerry11.github.io/Investmentcompany.com/">Trade $500 get $1000</a><img src="1.png" alt=""><p>Travel deals & rewards</p></div>
-      <div class="offer"><a href="https://jeyjerry11.github.io/Investmentcompany.com/">Get 100% in 3 days investment</a><img src="1.png" alt=""><p>15% off dining</p></div>
+      <div class="offer"><a href="#">Earn money online</a><img src="1.png" alt=""><p>Earn cashback on shopping</p></div>
+      <div class="offer"><a href="#">Trade $500 get $1000</a><img src="1.png" alt=""><p>Travel deals & rewards</p></div>
+      <div class="offer"><a href="#">Get 100% in 3 days investment</a><img src="1.png" alt=""><p>15% off dining</p></div>
     </div>
   </div>
 
@@ -219,10 +231,10 @@
   <input type="file" id="profileFile" accept="image/*" style="display:none">
   
   <script>
-    const BAL_KEY = 'kc_paid_balance';
-    const TX_KEY = 'kc_paid_transactions';
-    const PROFILE_KEY = 'kc_paid_profile';
-    const HIDE_BALANCE_KEY = 'kc_hide_balance';
+    const BAL_KEY = 'kc_paid_balance_john';
+    const TX_KEY = 'kc_paid_transactions_john';
+    const PROFILE_KEY = 'kc_paid_profile_john';
+    const HIDE_BALANCE_KEY = 'kc_hide_balance_john';
 
     let isBalanceHidden = localStorage.getItem(HIDE_BALANCE_KEY) === 'true' || false;
 
@@ -231,7 +243,7 @@
       return '$' + num.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
     }
 
-    let balance = Number(localStorage.getItem(BAL_KEY) ?? 95310030);
+    let balance = Number(localStorage.getItem(BAL_KEY) ?? 3040900);
     let transactions = JSON.parse(localStorage.getItem(TX_KEY) || '[]');
     const profileData = localStorage.getItem(PROFILE_KEY);
     if(profileData) document.getElementById('profileImg').src = profileData;
@@ -256,7 +268,7 @@
       const list = document.getElementById('historyList');
       list.innerHTML = '';
       if(transactions.length === 0){
-        list.innerHTML = `<div class="tx"><div class="meta muted">No transactions yet</div></div>`;
+        list.innerHTML = `<div class="tx"><div class="meta muted">No recent transactions yet</div></div>`;
         return;
       }
       transactions.slice().reverse().forEach(tx=>{
@@ -292,3 +304,397 @@
       renderBalance();
     }
 
+    renderBalance();
+    renderHistory();
+    updateHideBalanceButton();
+
+    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+    document.getElementById('hamburger').addEventListener('click', ()=> openSidebar());
+    function openSidebar(){ sidebarBackdrop.style.display = 'flex'; sidebarBackdrop.style.alignItems = 'flex-start' }
+    function closeSidebar(){ sidebarBackdrop.style.display = 'none' }
+    sidebarBackdrop.addEventListener('click', (e)=>{ if(e.target === sidebarBackdrop) closeSidebar() })
+
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalContent = document.getElementById('modalContent');
+
+    function openModal(html){
+      modalContent.innerHTML = html;
+      modalBackdrop.style.display = 'flex';
+      document.querySelector('.modal').scrollTop = 0;
+    }
+    function closeModal(){
+      modalBackdrop.style.display = 'none';
+      modalContent.innerHTML = '';
+    }
+    modalBackdrop.addEventListener('click', (e)=>{ if(e.target === modalBackdrop) closeModal() });
+
+    // Chase Receipt Modal Generator
+    function showChaseReceipt(title, amount, recipientInfo){
+      const receiptHtml = `
+        <div class="chase-receipt">
+          <div class="chase-receipt-header">
+            <h2>CHASE BANK</h2>
+            <p>Official Transaction Receipt</p>
+          </div>
+          <div class="receipt-status">✓ Transfer Successful</div>
+          <div class="receipt-row"><span>Sender:</span><span>John Pardi</span></div>
+          <div class="receipt-row"><span>Recipient:</span><span>${recipientInfo}</span></div>
+          <div class="receipt-row"><span>Transaction Type:</span><span>${title}</span></div>
+          <div class="receipt-row"><span>Date/Time:</span><span>${new Date().toLocaleString()}</span></div>
+          <div class="receipt-row"><span>Confirmation #:</span><span>CHASE-${Math.floor(100000000 + Math.random() * 900000000)}</span></div>
+          <div class="receipt-total"><span>Total Sent:</span><span>${formatCurrency(amount)}</span></div>
+          <div style="margin-top:20px;text-align:center">
+            <button class="btn" onclick="closeModal()">Done</button>
+          </div>
+        </div>
+      `;
+      openModal(receiptHtml);
+    }
+
+    const profileImg = document.getElementById('profileImg');
+    profileImg.addEventListener('click', ()=> {
+      openModal(`
+        <h3>Change Profile Picture</h3>
+        <p class="muted">Click choose file to pick a new profile image.</p>
+        <div style="margin-top:10px">
+          <input type="file" id="pf" accept="image/*">
+        </div>
+        <div style="margin-top:14px" class="flex">
+          <button class="btn" id="saveProf">Save</button>
+          <button class="btn ghost" onclick="closeModal()">Cancel</button>
+        </div>
+      `);
+      document.getElementById('pf').addEventListener('change', function(){
+        const f = this.files[0];
+        if(!f) return;
+        const reader = new FileReader();
+        reader.onload = function(e){
+          document.getElementById('saveProf').dataset.preview = e.target.result;
+        };
+        reader.readAsDataURL(f);
+      });
+      document.getElementById('saveProf').addEventListener('click', function(){
+        const data = this.dataset.preview;
+        if(!data){ alert('Please choose an image first'); return; }
+        document.getElementById('profileImg').src = data;
+        localStorage.setItem(PROFILE_KEY, data);
+        closeModal();
+        alert('Profile updated.');
+      });
+    });
+
+    function openCardsModal(){
+      const cardsHtml = `
+        <h3>My Virtual Cards</h3>
+        <p class="muted">Click on any card to view details</p>
+        
+        <div class="cards-container">
+          <div class="card-wrapper" onclick="viewCardDetails('visa')">
+            <div class="virtual-card card-visa">
+              <div class="card-header">
+                <div class="card-logo">VISA</div>
+                <div class="card-chip"></div>
+              </div>
+              <div class="card-number">•••• •••• •••• 9441</div>
+              <div class="card-balance">
+                <div class="card-balance-label">Available Balance</div>
+                <div class="card-balance-amount">${isBalanceHidden ? '••••••' : formatCurrency(balance)}</div>
+              </div>
+              <div class="card-footer-info">
+                <div class="card-holder">John Pardi</div>
+                <div class="card-expiry">12/27</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;text-align:center">
+          <button class="btn ghost" onclick="closeModal()">Close</button>
+        </div>
+      `;
+      openModal(cardsHtml);
+    }
+
+    function viewCardDetails(cardType){
+      const card = {
+        name: 'Chase Visa Card',
+        number: '4532 1234 5678 9441',
+        holder: 'John Pardi',
+        expiry: '12/27',
+        cvv: '•••',
+        balance: balance,
+        status: 'Active',
+        type: 'Premium Checking'
+      };
+
+      const detailHtml = `
+        <h3>${card.name}</h3>
+        <div style="background:#f6fbff;padding:20px;border-radius:12px;margin:16px 0">
+          <div style="margin-bottom:12px">
+            <div class="muted">Card Number</div>
+            <div style="font-weight:700;font-size:1.1rem;letter-spacing:1px">${card.number}</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <div class="muted">Card Holder</div>
+              <div style="font-weight:700">${card.holder}</div>
+            </div>
+            <div>
+              <div class="muted">Expires</div>
+              <div style="font-weight:700">${card.expiry}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Balance</div>
+            <div class="stat-value">${isBalanceHidden ? '•••••' : formatCurrency(card.balance)}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Status</div>
+            <div class="stat-value" style="color:#2d8a3a">${card.status}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Type</div>
+            <div class="stat-value" style="font-size:0.9rem">${card.type}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">CVV</div>
+            <div class="stat-value">${card.cvv}</div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;display:flex;gap:8px">
+          <button class="btn" onclick="openCardsModal()">Back to Cards</button>
+          <button class="btn ghost" onclick="closeModal()">Close</button>
+        </div>
+      `;
+      openModal(detailHtml);
+    }
+
+    function openSendZelle(){
+      openModal(`
+        <h3>Send with Zelle</h3>
+        <p class="muted">Send money quickly to a U.S. email or phone number.</p>
+        <div class="field"><label>Recipient name</label><input type="text" id="z_name" placeholder="Recipient name"></div>
+        <div class="field"><label>Recipient email or phone</label><input type="text" id="z_target" placeholder="email or phone"></div>
+        <div class="field"><label>Amount (USD)</label><input type="number" id="z_amount" placeholder="100.00" min="0" step="0.01"></div>
+        <div style="margin-top:12px" class="row">
+          <button class="btn" id="z_send">Send</button>
+          <button class="btn ghost" onclick="closeModal()">Cancel</button>
+        </div>
+      `);
+      document.getElementById('z_send').addEventListener('click', ()=>{
+        const name = document.getElementById('z_name').value.trim();
+        const target = document.getElementById('z_target').value.trim();
+        const amount = Number(document.getElementById('z_amount').value || 0);
+        if(!name || !target || amount<=0){ alert('Please complete all fields with a valid amount.'); return;}
+        if(amount > balance){ alert('Insufficient balance.'); return; }
+        balance = +(balance - amount).toFixed(2);
+        addTransaction(`Zelle to ${name} (${target})`, -amount, 'Z');
+        showChaseReceipt('Zelle Transfer', amount, `${name} (${target})`);
+      });
+    }
+
+    function openPayBills(){
+      openModal(`
+        <h3>Pay Bills</h3>
+        <p class="muted">Choose biller from the dropdown and pay instantly.</p>
+        <div class="field"><label>Biller</label>
+          <select id="billSelect">
+            <option value="">-- Select biller --</option>
+            <option value="Electricity">Electricity</option>
+            <option value="Water">Water</option>
+            <option value="Internet">Internet</option>
+            <option value="Cable TV">Cable TV</option>
+            <option value="Mobile">Mobile</option>
+          </select>
+        </div>
+        <div class="field"><label>Account / Customer ID</label><input type="text" id="billAcct" placeholder="Account number"></div>
+        <div class="field"><label>Amount</label><input type="number" id="billAmount" placeholder="50.00" min="0" step="0.01"></div>
+        <div style="margin-top:12px" class="row">
+          <button class="btn" id="bill_pay">Pay</button>
+          <button class="btn ghost" onclick="closeModal()">Cancel</button>
+        </div>
+      `);
+      document.getElementById('bill_pay').addEventListener('click', ()=>{
+        const bill = document.getElementById('billSelect').value;
+        const acct = document.getElementById('billAcct').value.trim();
+        const amount = Number(document.getElementById('billAmount').value || 0);
+        if(!bill || !acct || amount <= 0){ alert('Please select biller and provide an amount and account.'); return; }
+        if(amount > balance){ alert('Insufficient balance'); return; }
+        balance = +(balance - amount).toFixed(2);
+        addTransaction(`${bill} bill (Acct: ${acct})`, -amount, 'Bill');
+        showChaseReceipt('Bill Payment', amount, `${bill} (Acct: ${acct})`);
+      });
+    }
+
+    function openDepositModal(){
+      openModal(`
+        <h3>Deposit / Receive</h3>
+        <p class="muted">Use the account details below to send funds into this account.</p>
+        <div style="background:#f6fbff;border-radius:10px;padding:12px;margin:10px 0">
+          <div style="font-weight:700">Account name</div>
+          <div class="muted">John Pardi</div>
+          <div style="height:10px"></div>
+          <div style="font-weight:700">Deposit Details</div>
+          <div class="muted">Wire transfer available. Contact Support: johnppardi07@gmail.com</div>
+        </div>
+        <div class="field"><label>Amount to add</label><input type="number" id="dep_amount" placeholder="100.00" min="0" step="0.01"></div>
+        <div style="margin-top:12px" class="row">
+          <button class="btn" id="dep_sim">Complete Deposit</button>
+          <button class="btn ghost" onclick="closeModal()">Close</button>
+        </div>
+      `);
+      document.getElementById('dep_sim').addEventListener('click', ()=>{
+        const amount = Number(document.getElementById('dep_amount').value || 0);
+        if(amount <= 0){ alert('Enter an amount to simulate deposit.'); return; }
+        balance = +(balance + amount).toFixed(2);
+        addTransaction('Deposit (Simulated)', amount, 'Deposit');
+        closeModal();
+        alert(`Deposit of ${formatCurrency(amount)} added successfully!\nContact: johnppardi07@gmail.com`);
+      });
+    }
+
+    document.getElementById('payBtn').addEventListener('click', openPayMenu);
+
+    function openPayMenu(){
+      openModal(`
+        <h3>Pay</h3>
+        <p class="muted">Choose how you'd like to pay.</p>
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <button class="btn" onclick="openBankTransfer()">Bank Transfer</button>
+          <button class="btn ghost" onclick="openPayPal()">PayPal</button>
+          <button class="btn ghost" onclick="openCashApp()">CashApp</button>
+        </div>
+        <div style="margin-top:12px"><button class="btn ghost" onclick="closeModal()">Cancel</button></div>
+      `);
+    }
+
+    function openBankTransfer(){
+      openModal(`
+        <h3>Bank Transfer (U.S.)</h3>
+        <p class="muted">Send money to other U.S. banks.</p>
+        <div class="field"><label>Recipient name</label><input id="bt_name" type="text"></div>
+        <div class="field"><label>Routing number</label><input id="bt_routing" type="text"></div>
+        <div class="field"><label>Account number</label><input id="bt_account" type="text"></div>
+        <div class="field"><label>Amount</label><input id="bt_amount" type="number" min="0" step="0.01"></div>
+        <div style="margin-top:12px" class="row">
+          <button class="btn" id="bt_send">Send</button>
+          <button class="btn ghost" onclick="closeModal()">Cancel</button>
+        </div>
+      `);
+      document.getElementById('bt_send').addEventListener('click', ()=>{
+        const nm = document.getElementById('bt_name').value.trim();
+        const rout = document.getElementById('bt_routing').value.trim();
+        const acct = document.getElementById('bt_account').value.trim();
+        const amount = Number(document.getElementById('bt_amount').value || 0);
+        if(!nm || !rout || !acct || amount <= 0){ alert('Complete all fields'); return; }
+        if(amount > balance){ alert('Insufficient balance'); return; }
+        balance = +(balance - amount).toFixed(2);
+        addTransaction(`Bank transfer to ${nm}`, -amount, 'Bank');
+        showChaseReceipt('Bank Transfer', amount, `${nm} (Acct: ${acct})`);
+      });
+    }
+
+    function openPayPal(){
+      openModal(`
+        <h3>PayPal Payment</h3>
+        <p class="muted">Send to a PayPal email account.</p>
+        <div class="field"><label>PayPal email</label><input id="pp_email" type="email"></div>
+        <div class="field"><label>Amount</label><input id="pp_amount" type="number" min="0" step="0.01"></div>
+        <div style="margin-top:12px" class="row">
+          <button class="btn" id="pp_send">Send</button>
+          <button class="btn ghost" onclick="closeModal()">Cancel</button>
+        </div>
+      `);
+      document.getElementById('pp_send').addEventListener('click', ()=>{
+        const email = document.getElementById('pp_email').value.trim();
+        const amount = Number(document.getElementById('pp_amount').value || 0);
+        if(!email || amount <= 0){ alert('Complete fields'); return; }
+        if(amount > balance){ alert('Insufficient balance'); return; }
+        balance = +(balance - amount).toFixed(2);
+        addTransaction(`PayPal to ${email}`, -amount, 'PayPal');
+        showChaseReceipt('PayPal Transfer', amount, email);
+      });
+    }
+
+    function openCashApp(){
+      openModal(`
+        <h3>CashApp Payment</h3>
+        <p class="muted">Send to a CashApp tag or phone number.</p>
+        <div class="field"><label>CashTag or Phone</label><input id="ca_target" type="text"></div>
+        <div class="field"><label>Amount</label><input id="ca_amount" type="number" min="0" step="0.01"></div>
+        <div style="margin-top:12px" class="row">
+          <button class="btn" id="ca_send">Send</button>
+          <button class="btn ghost" onclick="closeModal()">Cancel</button>
+        </div>
+      `);
+      document.getElementById('ca_send').addEventListener('click', ()=>{
+        const tgt = document.getElementById('ca_target').value.trim();
+        const amount = Number(document.getElementById('ca_amount').value || 0);
+        if(!tgt || amount <= 0){ alert('Complete fields'); return; }
+        if(amount > balance){ alert('Insufficient balance'); return; }
+        balance = +(balance - amount).toFixed(2);
+        addTransaction(`CashApp to ${tgt}`, -amount, 'CashApp');
+        showChaseReceipt('CashApp Transfer', amount, tgt);
+      });
+    }
+
+    function openAccountModal(){
+      const historyHtml = transactions.length ? transactions.slice().reverse().map(tx=>{
+        return `<div style="padding:10px;border-radius:10px;background:#fbfeff;margin-bottom:8px">
+          <div style="font-weight:700">${tx.title}</div>
+          <div class="muted">${new Date(tx.time).toLocaleString()}</div>
+          <div style="margin-top:6px;font-weight:800;color:${tx.amount < 0 ? '#d64545' : '#2d8a3a'}">${tx.amount < 0 ? '-' : '+'}${formatCurrency(Math.abs(tx.amount)).slice(1)}</div>
+        </div>`;
+      }).join('') : `<div class="muted">No transactions yet</div>`;
+
+      openModal(`
+        <h3>Account Activity</h3>
+        <p class="muted">All transactions for John Pardi</p>
+        <div style="margin-top:12px">${historyHtml}</div>
+        <div style="margin-top:12px" class="center">
+          <button class="btn" onclick="closeModal()">Close</button>
+        </div>
+      `);
+    }
+
+    function openAssistant(){
+      openModal(`
+        <h3>Assistant</h3>
+        <p class="muted">Contact your accountant for help and escalations.</p>
+        <div style="margin-top:10px" class="muted">Account manager: John Pardi<br>📧 johnppardi07@gmail.com</div>
+        <div style="margin-top:12px" class="center">
+          <button class="btn" onclick="closeModal()">Close</button>
+        </div>
+      `);
+    }
+
+    document.getElementById('sendZelleBtn').addEventListener('click', openSendZelle);
+    document.getElementById('payBillsBtn').addEventListener('click', openPayBills);
+    document.getElementById('depositBtn').addEventListener('click', openDepositModal);
+    document.getElementById('assistantBtn').addEventListener('click', openAssistant);
+    document.getElementById('accountBtn').addEventListener('click', openAccountModal);
+    document.getElementById('moreBtn').addEventListener('click', openCardsModal);
+
+    window.openAccountModal = ()=>{ closeSidebar(); openAccountModal(); };
+    window.openAssistant = ()=>{ closeSidebar(); openAssistant(); };
+    window.openDepositModal = ()=>{ closeSidebar(); openDepositModal(); };
+    window.openPayBills = ()=>{ closeSidebar(); openPayBills(); };
+    window.openSendZelle = ()=>{ closeSidebar(); openSendZelle(); };
+    window.toggleHideBalance = toggleHideBalance;
+    window.closeModal = closeModal;
+    window.openCardsModal = openCardsModal;
+    window.viewCardDetails = viewCardDetails;
+    window.openBankTransfer = openBankTransfer;
+    window.openPayPal = openPayPal;
+    window.openCashApp = openCashApp;
+
+    document.getElementById('trackBtn').addEventListener('click', ()=> alert('Tracking features coming soon...'));
+
+    window.addEventListener('beforeunload', ()=> saveState());
+  </script>
+</body>
+</html>
